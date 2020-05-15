@@ -24,6 +24,16 @@ iniclaim=fred.get_series("ICSA")['2020-01-01':]
 contclaim=fred.get_series("CCSA")['2020-01-01':]
 #m1=fred.get_series("M1")['2020-01-01':]
 
+
+#balance sheet
+# (WALCL)
+#Assets: Total Assets: Total Assets (Less Eliminations From Consolidation): Wednesday Level (WALCL)
+#Assets: Other: Repurchase Agreements: Wednesday Level (WORAL)
+#Assets: Securities Held Outright: U.S. Treasury Securities: All: Wednesday Level (TREAST)
+#Assets: Securities Held Outright: Mortgage-Backed Securities: Wednesday Level (WSHOMCB)
+#Assets: Central Bank Liquidity Swaps: Central Bank Liquidity Swaps: Wednesday Level (SWPT)
+
+
 x1=iniclaim.index
 x2=contclaim.index
 all_claim=deepcopy(contclaim)
