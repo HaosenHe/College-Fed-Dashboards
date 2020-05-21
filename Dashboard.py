@@ -32,19 +32,67 @@ contclaim=fred.get_series("CCSA")['2020-01-01':]
 #Assets: Securities Held Outright: U.S. Treasury Securities: All: Wednesday Level (TREAST)
 #Assets: Securities Held Outright: Mortgage-Backed Securities: Wednesday Level (WSHOMCB)
 #Assets: Central Bank Liquidity Swaps: Central Bank Liquidity Swaps: Wednesday Level (SWPT)
+total=fred.get_series('WALCL')['2007-01-01':]
+ustreasury=fred.get_series('TREAST')['2007-01-01':]
+mbs=fred.get_series('WSHOMCB')['2007-01-01':]
+repo=fred.get_series('WORAL')['2007-01-01':]
 
-
+x=total.index
 x1=iniclaim.index
 x2=contclaim.index
 all_claim=deepcopy(contclaim)
 for i in range(0,len(all_claim)):
     all_claim[i]=all_claim[i]+iniclaim[i]
+    
+# Balance Sheet
+bsheet = go.Figure()
+bsheet.add_trace(go.Scatter(
+    x=x, y=total,
+    name = 'Others',
+    hoverinfo='name+x+y',
+    line=dict(color='red'),
+    fillcolor='rgba(255,0,0,1)',
+    fill='tonexty'
+    ))
+bsheet.add_trace(go.Scatter(
+    x=x, y=mbs,
+    hoverinfo='name+x+y',
+    name = 'Mortagage-Backed Securities',
+    line=dict(color='forestgreen'),
+    fillcolor='rgba(34,139,34,1)',
+    mode='none',
+    stackgroup='one'
+))
+
+bsheet.add_trace(go.Scatter(
+    x=x, y=repo,
+    hoverinfo='name+x+y',
+    name = 'Repurchase Agreements',
+    line=dict(color='darkorange'),
+    fillcolor='rgba(255,140,0,1)',
+    mode='none',
+    stackgroup='one'
+))
+
+bsheet.add_trace(go.Scatter(
+    x=x, y=ustreasury,
+    hoverinfo='name+x+y',
+    name = 'U.S.Treasury Bill',
+    line=dict(color='dodgerblue'),
+    fillcolor='rgba(0,128,255,1)',
+    stackgroup='one' # define stack group
+))
+
+bsheet.update_layout(
+    title="Federal Reserve Balance Sheet: Assets",
+    title_x=0.5
+)
 
 app=dash.Dash()
 app.layout = html.Div(children=[
-    html.H1('U.S. Unemployment Indicators from St. Louis Fed'),
-    html.H2('A Naive Python Dashboard'),
-    html.H3("@Haosen He 2020"),
+    html.H1('U.S. Economic Indicators from St. Louis Fed'),
+    html.H2('Python Dashboard'),
+   # html.H3("@Haosen He 2020"),
     dcc.Graph(id='unclaim',
               figure = {
                 'data': [{'x':x1, 'y' : iniclaim, 'name' : 'Initial Claim'},
@@ -55,22 +103,19 @@ app.layout = html.Div(children=[
                       'title' : 'U.S. Unemployment Claims'
                   }
               }),
-    dcc.Graph(id='unrate',
+    
+    dcc.Graph(figure=bsheet),
+          
+    dcc.Graph(id='unrate_and_lfpr',
               figure = {
-                'data': [{'x': unrate.index, 'y' : unrate}],
+                'data': [{'x': x1, 'y' : unrate, 'name' : 'Unemployment Rate'},
+                         {'x': x1, 'y' : lfpr, 'name' : 'Labor Force Participation Rate'}
+                         ],
                 'layout': {
-                'title' : 'U.S. Unemployment Rate'
-                  }
-              }),
-    dcc.Graph(id='lfpr',
-              figure = {
-                'data': [{'x': lfpr.index, 'y' : lfpr}],
-                'layout': {
-                'title' : 'U.S. Labor Force Participation Rate'
+                'title' : 'U.S. Unemployment and Labor Force Participation Rates'
                   }
               })
- ])   
-    
+    ])
 
 if __name__ =='__main__':
     app.run_server(debug=False, use_reloader=False,threaded=True)
