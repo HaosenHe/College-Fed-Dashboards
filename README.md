@@ -46,6 +46,15 @@ Python requirement: Python 3.7 or newer versions
    
     *  copy the link in the output and go to the webpage using your browser
 
+* How to play wth the Dashobard:
+    * select tools from the toolbar on the top right cornor
+    
+         * you can zoom in and out and download the picture 
+    
+    * hover on the grpah and it will display the value
+    
+    * click the lengend to hide and display a line/curve/area
+
 * How contribute to the dashboard (you need to learn some basic Git to do this):
 
     * fork the repository in GitHub
