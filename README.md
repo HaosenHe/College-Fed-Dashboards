@@ -50,10 +50,15 @@ Python requirement: Python 3.7 or newer versions
     * select tools from the toolbar on the top right cornor
     
          * you can zoom in and out and download the picture 
+         <img src="toolbar.PNG">
     
     * hover on the grpah and it will display the value
     
+         <img src="hover.PNG">
+    
     * click the lengend to hide and display a line/curve/area
+         <img src="show.PNG">
+         <img src="hide.PNG">
 
 * How contribute to the dashboard (you need to learn some basic Git to do this):
 
