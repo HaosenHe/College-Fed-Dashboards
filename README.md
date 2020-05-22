@@ -52,7 +52,7 @@ Python requirement: Python 3.7 or newer versions
          * you can zoom in and out and download the picture 
          <img src="toolbar.PNG">
     
-    * hover on the grpah and it will display the value
+    * hover on the grpah and it will display the values
     
          <img src="hover.PNG">
     
