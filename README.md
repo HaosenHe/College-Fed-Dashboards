@@ -4,7 +4,7 @@ System Requirement: Any popular operating system can run the script
 
 Python requirement: Python3.7 or newer versions
 
-if you don't have python:
+* if you don't have python:
 
   Download python at https://www.python.org/downloads/
 
