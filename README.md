@@ -40,7 +40,7 @@ Python requirement: Python 3.7 or newer versions
      
        * else if you are on MacOS: https://www.youtube.com/watch?v=nnpt4L5XezA
      
-        after doing this, you'll get a output similiar to this:
+        after running the script, wait for a while and you'll get a output similiar to this:
   
    <img src="Capture.PNG" />
    
