@@ -2,7 +2,7 @@
 
 System Requirement: Any popular operating system can run the script
 
-Python requirement: Python 3.7 or newer versions
+Python Requirement: Python 3.7 or newer versions
 
 * if you don't have python:
 
