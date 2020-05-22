@@ -23,7 +23,9 @@ Python requirement: Python 3.7 or newer versions
   * in your command line/terminal, type cd + foldername to go to the directory that stores req.txt
 
   *  in your command line/terminal, type:
+  
      pip install -r req.txt
+  
      and you'll be all set.
    
 * How to run the script:
