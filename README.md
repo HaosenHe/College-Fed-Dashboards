@@ -4,21 +4,21 @@ System Requirement: Any popular operating system can run the script
 
 Python requirement: Python3.7 or newer versions
 
-if you don't have python:
+*if you don't have python:
 
   Download python at https://www.python.org/downloads/
+  
+  if you don't have pip:
 
-if you don't have pip:
-
-  if you're on Mac OS: 
+                *if you're on Mac OS: 
   
     https://www.youtube.com/watch?v=yBdZZGPpYxg
   
-  else if you're on Windows: 
+               *else if you're on Windows: 
   
      https://phoenixnap.com/kb/install-pip-windows
   
-  else if you're on Linux:
+               *else if you're on Linux:
   
     You don't need to read this. You can figure it out yourself.
     
