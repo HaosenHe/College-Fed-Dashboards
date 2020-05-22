@@ -2,7 +2,7 @@
 
 System Requirement: Any popular operating system can run the script
 
-Python requirement: Python3.7 or newer versions
+Python requirement: Python 3.7 or newer versions
 
 * if you don't have python:
 
@@ -42,7 +42,7 @@ Python requirement: Python3.7 or newer versions
   
    <img src="Capture.PNG" />
    
-    *  copy the link and go to the webpage using your browser
+    *  copy the link in the output and go to the webpage using your browser
 
 * How contribute to the dashboard (you need to learn some basic Git to do this):
 
