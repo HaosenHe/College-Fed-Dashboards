@@ -18,41 +18,41 @@ Python requirement: Python3.7 or newer versions
     
 * if you already have pip:
 
-  1. download the req.txt in this GitHub repository
+  * download the req.txt in this GitHub repository
 
-  2. in your command line/terminal, type cd + foldername to go to the directory that stores req.txt
+  * in your command line/terminal, type cd + foldername to go to the directory that stores req.txt
 
-  3. in your command line/terminal, type:
+  *  in your command line/terminal, type:
      pip install -r req.txt
      and you'll be all set.
    
- How to run the script:
+* How to run the script:
  
-1. download the .py file from the GitHub repository
+    * download the .py file from the GitHub repository
 
-2. run the .py file from the command line/terminal
+    * run the .py file from the command line/terminal
 
-   if you don't know how to do this:
+       * if you don't know how to do this:
    
-     if you are on Windows: https://www.youtube.com/watch?v=n1Q8xs2YC8Q
+       * if you are on Windows: https://www.youtube.com/watch?v=n1Q8xs2YC8Q
      
-     else if you are on MacOS: https://www.youtube.com/watch?v=nnpt4L5XezA
+       * else if you are on MacOS: https://www.youtube.com/watch?v=nnpt4L5XezA
      
-  after doing this, you'll get a output similiar to this:
+        after doing this, you'll get a output similiar to this:
   
    <img src="Capture.PNG" />
    
-3.  copy the link and go to the webpage using your browser
+    *  copy the link and go to the webpage using your browser
 
-How contribute to the dashboard (you need to learn some basic Git to do this):
+* How contribute to the dashboard (you need to learn some basic Git to do this):
 
-1. fork the repository in GitHub
+    * fork the repository in GitHub
+    
+    * make changes locally
 
-2. make changes locally
-
-3. push to your changes to your own copy of the dashboard .py file
-
-4. send a pull request to me
+    * push to your changes to your own copy of the dashboard .py file
+        
+    * send a pull request to me
 
  
 
