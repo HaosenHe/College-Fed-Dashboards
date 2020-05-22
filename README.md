@@ -46,7 +46,7 @@ Python requirement: Python 3.7 or newer versions
    
     *  copy the link in the output and go to the webpage using your browser
 
-* How to play with this Dashobard:
+* How to play with this Dashboard:
     * select tools from the toolbar on the top right cornor
     
          * you can zoom in and out and download the picture 
