@@ -1,12 +1,8 @@
 # @Haosen He 2020
 from fredapi import Fred
-import datetime
-import chart_studio.plotly as py
 import plotly.graph_objs as go
-import numpy as np
-import pandas as pd
-from copy import deepcopy
 import dash
+from copy import deepcopy
 import dash_core_components as dcc
 import dash_html_components as html
 
@@ -19,7 +15,14 @@ y = fred.get_series('GDPC1')['2020-01-01':]
 #cpi=fred.get_series('CPIAUCSL')['2020-01-01':]
 unrate=fred.get_series('UNRATE')['2020-01-01':]
 lfpr=fred.get_series("CIVPART")['2020-01-01':]
-#rate=fred.get_series("INTDSRUSM193N")['2020-01-01':]
+
+#rates
+ffr=fred.get_series("DFF")['2020-01-01':]
+threemtreasure=fred.get_series('DTB3')['2020-01-01':]
+tenyrtreasure=fred.get_series('DGS10')['2020-01-01':]
+libor=fred.get_series('USD1MTD156N')['2020-01-01':]
+oneyrtreasure=fred.get_series('DGS1')['2020-01-01':]
+
 iniclaim=fred.get_series("ICSA")['2020-01-01':]
 contclaim=fred.get_series("CCSA")['2020-01-01':]
 #m1=fred.get_series("M1")['2020-01-01':]
@@ -40,6 +43,7 @@ repo=fred.get_series('WORAL')['2007-01-01':]
 x=total.index
 x1=iniclaim.index
 x2=contclaim.index
+x3=ffr.index
 all_claim=deepcopy(contclaim)
 for i in range(0,len(all_claim)):
     all_claim[i]=all_claim[i]+iniclaim[i]
@@ -106,13 +110,16 @@ app.layout = html.Div(children=[
     
     dcc.Graph(figure=bsheet),
           
-    dcc.Graph(id='unrate_and_lfpr',
+    dcc.Graph(id='rates',
               figure = {
-                'data': [{'x': x1, 'y' : unrate, 'name' : 'Unemployment Rate'},
-                         {'x': x1, 'y' : lfpr, 'name' : 'Labor Force Participation Rate'}
+                'data': [{'x': x3, 'y' : ffr, 'name' : 'Effective Federal Funds Rate'},
+                         {'x': x3, 'y' : libor, 'name' : 'LIBOR'},
+                         {'x': x3, 'y' : threemtreasure, 'name' : '3-Month Treasury Bill: Secondary Market Rate'},
+                         {'x': x3, 'y' : oneyrtreasure, 'name' : '1-Year Treasury Constant Maturity Rate'},
+                         {'x': x3, 'y' : tenyrtreasure, 'name' : '10-Year Treasury Constant Maturity Rate'}
                          ],
                 'layout': {
-                'title' : 'U.S. Unemployment and Labor Force Participation Rates'
+                'title' : 'Short-term Interest Rates and T-Bill Returns'
                   }
               })
     ])
