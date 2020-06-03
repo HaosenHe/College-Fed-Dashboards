@@ -6,7 +6,7 @@ from copy import deepcopy
 import dash_core_components as dcc
 import dash_html_components as html
 
-fred = Fred(api_key='1e447a08c4fbfd495098d0747c38f3af') 
+fred = Fred(api_key='1e447a08c4fbfd495098d0747c38f3af')
 # This api key should only be used for WFU 2020 College Fed Chanllenge Team Python Dahsboard
 # Do not use this key for other purposes
 
@@ -25,9 +25,12 @@ oneyrtreasure=fred.get_series('DGS1')['2020-01-01':]
 
 iniclaim=fred.get_series("ICSA")['2020-01-01':]
 contclaim=fred.get_series("CCSA")['2020-01-01':]
-#m1=fred.get_series("M1")['2020-01-01':]
 
+mb=fred.get_series('BOGMBASEW')['2007-01-01':]
+m1=fred.get_series("M1")['2007-01-01':]
+m2=fred.get_series("M2")['2007-01-01':]
 
+mb=[x/1000 for x in mb]
 #balance sheet
 # (WALCL)
 #Assets: Total Assets: Total Assets (Less Eliminations From Consolidation): Wednesday Level (WALCL)
@@ -47,7 +50,7 @@ x3=ffr.index
 all_claim=deepcopy(contclaim)
 for i in range(0,len(all_claim)):
     all_claim[i]=all_claim[i]+iniclaim[i]
-    
+
 # Balance Sheet
 bsheet = go.Figure()
 bsheet.add_trace(go.Scatter(
@@ -92,6 +95,39 @@ bsheet.update_layout(
     title_x=0.5
 )
 
+msheet = go.Figure()
+msheet.add_trace(go.Scatter(
+    x=m1.index, y=m2,
+    name = 'M2',
+    hoverinfo='name+x+y',
+    line=dict(color='red'),
+    fillcolor='rgba(255,0,0,1)',
+    fill='tonexty'
+    ))
+msheet.add_trace(go.Scatter(
+    x=m1.index, y=m1,
+    hoverinfo='name+x+y',
+    name = 'M1',
+    line=dict(color='forestgreen'),
+    fillcolor='rgba(34,139,34,1)',
+    mode='none',
+    stackgroup='one'
+))
+msheet.add_trace(go.Scatter(
+    x=m1.index, y=mb,
+    hoverinfo='name+x+y',
+    name = 'Monetary Base',
+    line=dict(color='darkorange'),
+    fillcolor='rgba(255,140,0,1)',
+    mode='none',
+    stackgroup='one'
+))
+
+msheet.update_layout(
+    title="Monetary Base, M1 and M2 in the U.S.",
+    title_x=0.5
+)
+
 app=dash.Dash()
 app.layout = html.Div(children=[
     html.H1('U.S. Economic Indicators from St. Louis Fed'),
@@ -107,9 +143,9 @@ app.layout = html.Div(children=[
                       'title' : 'U.S. Unemployment Claims'
                   }
               }),
-    
+
     dcc.Graph(figure=bsheet),
-          
+
     dcc.Graph(id='rates',
               figure = {
                 'data': [{'x': x3, 'y' : ffr, 'name' : 'Effective Federal Funds Rate'},
@@ -121,8 +157,11 @@ app.layout = html.Div(children=[
                 'layout': {
                 'title' : 'Short-term Interest Rates and T-Bill Returns'
                   }
-              })
+              }),
+
+    dcc.Graph(figure=msheet)
     ])
+
 
 if __name__ =='__main__':
     app.run_server(debug=False, use_reloader=False,threaded=True)
