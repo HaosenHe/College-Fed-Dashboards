@@ -5,6 +5,10 @@ import dash
 from copy import deepcopy
 import dash_core_components as dcc
 import dash_html_components as html
+from urllib.request import urlopen
+import json
+with open("C:\\Users\\s1760\\Desktop\\CFC\\WFU CFC Dashboard\\state_hash.json", "r") as read_file:
+    geodata = json.load(read_file)
 
 fred = Fred(api_key='1e447a08c4fbfd495098d0747c38f3af')
 # This api key should only be used for WFU 2020 College Fed Chanllenge Team Python Dahsboard
