@@ -1,6 +1,8 @@
 # @Haosen He 2020
 from fredapi import Fred
 import plotly.graph_objs as go
+import plotly.express as px
+import pandas as pd
 import dash
 from copy import deepcopy
 import dash_core_components as dcc
@@ -132,11 +134,38 @@ msheet.update_layout(
     title_x=0.5
 )
 
+#continued claims Choropleth
+state_code=['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN',
+            'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH',
+            'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT',
+            'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
+cclaims=[]
+for i in state_code:
+    cclaims.append(fred.get_series(i+"CCLAIMS")[-1]/(fred.get_series(i+"POP")[-1]*1000))
+
+dfdict={'state_code':state_code, 'cclaims':cclaims}
+df=pd.DataFrame(dfdict)
+
+cclaimsmap = px.choropleth(df, geojson=geodata,
+                           locations="state_code", scope='usa',
+                           color='cclaims',
+                           labels={'cclaims':'continued claims/state population'})
+
+cclaimsmap.update_layout(title="Number of Continued Claims as Percentages of State Population",
+                         title_x=0.5)
+cclaimsmap.update_layout(
+    autosize=False,
+    width=1000,
+    height=800,)
+
 app=dash.Dash()
 app.layout = html.Div(children=[
     html.H1('U.S. Economic Indicators from St. Louis Fed'),
     html.H2('Python Dashboard'),
-   # html.H3("@Haosen He 2020"),
+    # html.H3("@Haosen He 2020"),
+
+    dcc.Graph(figure=cclaimsmap),
+
     dcc.Graph(id='unclaim',
               figure = {
                 'data': [{'x':x1, 'y' : iniclaim, 'name' : 'Initial Claim'},
@@ -163,7 +192,9 @@ app.layout = html.Div(children=[
                   }
               }),
 
-    dcc.Graph(figure=msheet)
+    dcc.Graph(figure=msheet),
+
+
     ])
 
 
