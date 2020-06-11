@@ -32,11 +32,9 @@ oneyrtreasure=fred.get_series('DGS1')['2020-01-01':]
 iniclaim=fred.get_series("ICSA")['2020-01-01':]
 contclaim=fred.get_series("CCSA")['2020-01-01':]
 
-mb=fred.get_series('BOGMBASEW')['2007-01-01':]
 m1=fred.get_series("M1")['2007-01-01':]
 m2=fred.get_series("M2")['2007-01-01':]
 
-mb=[x/1000 for x in mb]
 #balance sheet
 # (WALCL)
 #Assets: Total Assets: Total Assets (Less Eliminations From Consolidation): Wednesday Level (WALCL)
@@ -97,7 +95,7 @@ bsheet.add_trace(go.Scatter(
 ))
 
 bsheet.update_layout(
-    title="Federal Reserve Balance Sheet: Assets",
+    title="Federal Reserve Balance Sheet: Assets (Billions USD)",
     title_x=0.5
 )
 
@@ -108,21 +106,14 @@ msheet.add_trace(go.Scatter(
     hoverinfo='name+x+y',
     line=dict(color='red'),
     fillcolor='rgba(255,0,0,1)',
+    mode='none',
     fill='tonexty'
     ))
+
 msheet.add_trace(go.Scatter(
     x=m1.index, y=m1,
     hoverinfo='name+x+y',
     name = 'M1',
-    line=dict(color='forestgreen'),
-    fillcolor='rgba(34,139,34,1)',
-    mode='none',
-    stackgroup='one'
-))
-msheet.add_trace(go.Scatter(
-    x=m1.index, y=mb,
-    hoverinfo='name+x+y',
-    name = 'Monetary Base',
     line=dict(color='darkorange'),
     fillcolor='rgba(255,140,0,1)',
     mode='none',
@@ -130,7 +121,7 @@ msheet.add_trace(go.Scatter(
 ))
 
 msheet.update_layout(
-    title="Monetary Base, M1 and M2 in the U.S.",
+    title="Monetary Base, M1 and M2 in the U.S. (Billions USD)",
     title_x=0.5
 )
 
@@ -151,31 +142,27 @@ cclaimsmap = px.choropleth(df, geojson=geodata,
                            color='cclaims',
                            labels={'cclaims':'continued claims/state population'})
 
-cclaimsmap.update_layout(title="Number of Continued Claims as Percentages of State Population",
-                         title_x=0.5)
-cclaimsmap.update_layout(
-    autosize=False,
-    width=1000,
-    height=800,)
 
 app=dash.Dash()
 app.layout = html.Div(children=[
     html.H1('U.S. Economic Indicators from St. Louis Fed'),
     html.H2('Python Dashboard'),
     # html.H3("@Haosen He 2020"),
-
-    dcc.Graph(figure=cclaimsmap),
-
-    dcc.Graph(id='unclaim',
-              figure = {
-                'data': [{'x':x1, 'y' : iniclaim, 'name' : 'Initial Claim'},
-                         {'x':x1, 'y' : contclaim, 'name' : 'Continued Claim'},
-                         {'x':x1, 'y' : all_claim, 'name' : 'Total Claim'}
-                        ],
-                  'layout': {
-                      'title' : 'U.S. Unemployment Claims'
-                  }
-              }),
+html.Div([
+        html.Div([
+            html.H3('U.S. Unemployment Claims'),
+            dcc.Graph(id='unclaim',
+                      figure = {
+                     'data': [{'x':x1, 'y' : iniclaim, 'name' : 'Initial Claim'},
+                             {'x':x1, 'y' : contclaim, 'name' : 'Continued Claim'},
+                             {'x':x1, 'y' : all_claim, 'name' : 'Total Claim'}]})],
+                             className="six columns"),
+        html.Div([
+            html.H3('Continued Claims as Percentages of State Population'),
+            dcc.Graph(id='cclaims',
+             figure=cclaimsmap)
+        ], className="six columns"),
+    ], className="column"),
 
     dcc.Graph(figure=bsheet),
 
@@ -196,7 +183,9 @@ app.layout = html.Div(children=[
 
 
     ])
-
+app.css.append_css({
+    'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
+})
 
 if __name__ =='__main__':
     app.run_server(debug=False, use_reloader=False,threaded=True)
